@@ -1,8 +1,13 @@
 import React from 'react'
+import Pizarra from '../components/Pizarra';
+import PizarraIn from '../components/PizarraIn';
 
 export const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+    <PizarraIn />
+    <Pizarra />
+    </div>
   )
 }
 

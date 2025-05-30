@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from .models import Pizarra
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,3 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
         print(validated_data)
         user = User.objects.create_user(**validated_data)
         return user
+    
+class PizarraSerializer(serializers.ModelSerializer):
+    usuario = serializers.CharField(source="usuario.username", read_only=True)
+
+    class Meta:
+        model = Pizarra
+        fields = ['id', 'contenido', 'usuario', 'fecha_ingreso']
