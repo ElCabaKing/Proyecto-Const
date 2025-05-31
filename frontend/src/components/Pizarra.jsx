@@ -23,7 +23,12 @@ function Pizarra() {
         {pizarras.map(p => (
           <li key={p.id}>
             <strong>{p.usuario}</strong>: {p.contenido} <br />
-            <small>{new Date(p.fecha_ingreso).toLocaleString()}</small>
+            <small>
+              {new Date(p.fecha_ingreso).toLocaleString('es-EC', {
+                dateStyle: 'short',
+                timeStyle: 'short'
+              })}
+            </small>
           </li>
         ))}
       </ul>
