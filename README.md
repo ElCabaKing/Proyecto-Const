@@ -1,0 +1,1 @@
+Este sistema web permite a los usuarios autenticarse mediante tokens JWT, publicar mensajes de texto en una pizarra común y visualizar la información de otros usuarios haciendo clic en sus nombres. Su objetivo principal es ofrecer una plataforma de comunicación simple y segura para usuarios registrados.
