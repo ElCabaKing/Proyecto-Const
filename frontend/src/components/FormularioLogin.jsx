@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import '../styles/General.css';
 
 function FormularioLogin({ route }) {
     const [username, setUsername] = useState("");
@@ -26,16 +27,15 @@ function FormularioLogin({ route }) {
     };
 
     return (
-        
-        <form
+        <form 
             onSubmit={handleSubmit}
-            className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md space-y-4"
+            className="login-form"
         >
-            <h1 className="text-2xl font-bold text-center mb-4">Login</h1>
+            <h1 className="login-title">Login</h1>
 
-            <div className="form-control w-full">
+            <div className="login-field">
                 <input
-                    className="input input-bordered w-full"
+                    className="login-input"
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -45,9 +45,9 @@ function FormularioLogin({ route }) {
                 />
             </div>
 
-            <div className="form-control w-full">
+            <div className="login-field">
                 <input
-                    className="input input-bordered w-full"
+                    className="login-input"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -56,14 +56,15 @@ function FormularioLogin({ route }) {
                     disabled={loading}
                 />
             </div>
-
-            <button
-                className={`btn btn-primary w-full ${loading ? "btn-disabled loading" : ""}`}
-                type="submit"
-                disabled={loading}
-            >
-                {loading ? "Processing..." : "Login"}
-            </button>
+            <div className="login-field">
+                <button
+                    className="login-btn"
+                    type="submit"
+                    disabled={loading}
+                >
+                    {loading ? "Processing..." : "Login"}
+                </button>
+            </div>
         </form>
     );
 }

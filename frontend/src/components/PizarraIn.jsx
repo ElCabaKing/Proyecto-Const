@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../api";
+import '../styles/General.css';
 
 function PizarraIn({ onInsert }) {
   const [contenido, setContenido] = useState("");
@@ -13,7 +14,7 @@ function PizarraIn({ onInsert }) {
     try {
       await api.post("/api/pizarra/", { contenido });
       setContenido("");
-      if (onInsert) onInsert(); // Para recargar la lista si lo usas
+      if (onInsert) onInsert();
     } catch (err) {
       setError("Error al insertar la pizarra");
     } finally {
@@ -22,19 +23,24 @@ function PizarraIn({ onInsert }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="pizarra-in-form">
       <textarea
         value={contenido}
         onChange={e => setContenido(e.target.value)}
         placeholder="Escribe el contenido..."
         required
         rows={3}
-        style={{ width: "100%" }}
+        className="pizarra-in-textarea"
       />
-      <button type="submit" disabled={loading}>
+      <button
+        type="submit"
+        disabled={loading}
+        className="pizarra-in-btn"
+        onClick={() => setTimeout(() => window.location.reload(), 300)}
+      >
         {loading ? "Guardando..." : "Agregar Pizarra"}
       </button>
-      {error && <div style={{ color: "red" }}>{error}</div>}
+      {error && <div className="pizarra-in-error">{error}</div>}
     </form>
   );
 }

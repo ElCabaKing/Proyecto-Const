@@ -12,8 +12,6 @@ urlpatterns = [
     path("api/", include("api.urls")),
     path("api/pizarra/", PizarraListCreateView.as_view(), name="pizarra-list-create"),
     path("api/pizarras", PizarraListView.as_view(), name="pizarra-lis-view"),
-    path('roomChats/', RoomChatListCreateView.as_view(), name='roomChats-list-create'),
-    path('messageChats/', ChatMessagesListCreateView.as_view(), name='messageChats-list-create'),
     path('api/getUser/',UserView.as_view(), name='get_user'),
 ]
 

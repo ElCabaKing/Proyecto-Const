@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
+import '../styles/General.css';
 
 function FormularioRegistro({ route }) {
     const [first_name, setFirstName] = useState("");
@@ -8,7 +9,7 @@ function FormularioRegistro({ route }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [isStaff, setIsStaff] = useState(false); // false = user, true = admin
+    const [isStaff, setIsStaff] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -30,13 +31,13 @@ function FormularioRegistro({ route }) {
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md space-y-4"
+            className="register-form"
         >
-            <h1 className="text-2xl font-bold text-center mb-4">Register</h1>
+            <h1 className="register-title">Register</h1>
 
-            <div className="form-control w-full">
+            <div className="register-field">
                 <input
-                    className="input input-bordered w-full"
+                    className="register-input"
                     type="text"
                     value={first_name}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -46,9 +47,9 @@ function FormularioRegistro({ route }) {
                 />
             </div>
 
-            <div className="form-control w-full">
+            <div className="register-field">
                 <input
-                    className="input input-bordered w-full"
+                    className="register-input"
                     type="text"
                     value={last_name}
                     onChange={(e) => setLastName(e.target.value)}
@@ -58,9 +59,9 @@ function FormularioRegistro({ route }) {
                 />
             </div>
 
-            <div className="form-control w-full">
+            <div className="register-field">
                 <input
-                    className="input input-bordered w-full"
+                    className="register-input"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -70,9 +71,9 @@ function FormularioRegistro({ route }) {
                 />
             </div>
 
-            <div className="form-control w-full">
+            <div className="register-field">
                 <input
-                    className="input input-bordered w-full"
+                    className="register-input"
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -82,9 +83,9 @@ function FormularioRegistro({ route }) {
                 />
             </div>
 
-            <div className="form-control w-full">
+            <div className="register-field">
                 <input
-                    className="input input-bordered w-full"
+                    className="register-input"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -94,35 +95,35 @@ function FormularioRegistro({ route }) {
                 />
             </div>
 
-            <div className="form-control w-full">
-                <div className="flex gap-4">
-                    <label className="cursor-pointer flex items-center">
+            <div className="register-field">
+                <div className="register-radio-group">
+                    <label className="register-radio-label">
                         <input
                             type="radio"
-                            className="radio radio-primary"
+                            className="register-radio"
                             value={false}
                             checked={!isStaff}
                             onChange={() => setIsStaff(false)}
                             disabled={loading}
                         />
-                        <span className="ml-2">User</span>
+                        <span>User</span>
                     </label>
-                    <label className="cursor-pointer flex items-center">
+                    <label className="register-radio-label">
                         <input
                             type="radio"
-                            className="radio radio-secondary"
+                            className="register-radio"
                             value={true}
                             checked={isStaff}
                             onChange={() => setIsStaff(true)}
                             disabled={loading}
                         />
-                        <span className="ml-2">Admin</span>
+                        <span>Admin</span>
                     </label>
                 </div>
             </div>
 
             <button
-                className={`btn btn-primary w-full ${loading ? "btn-disabled loading" : ""}`}
+                className="register-btn"
                 type="submit"
                 disabled={loading}
             >

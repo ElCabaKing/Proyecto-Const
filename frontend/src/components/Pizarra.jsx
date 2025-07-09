@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
+import { Link } from "react-router-dom";
+import '../styles/General.css';
 
 function Pizarra() {
   const [pizarras, setPizarras] = useState([]);
@@ -14,16 +16,25 @@ function Pizarra() {
       .catch(() => setLoading(false));
   }, []);
 
-  if (loading) return <div>Cargando pizarras...</div>;
+  if (loading) return <div className="pizarra-loading">Cargando pizarras...</div>;
 
   return (
-    <div>
-      <h2>Pizarras</h2>
-      <ul>
+    <div className="pizarra-container">
+      <h2 className="pizarra-title">Pizarras</h2>
+      <ul className="pizarra-list">
         {pizarras.map(p => (
-          <li key={p.id}>
-            <strong>{p.usuario}</strong>: {p.contenido} <br />
-            <small>
+          <li key={p.id} className="pizarra-item">
+            <strong>
+              <Link
+                to={`/user/${p.usuario}`}
+                className="pizarra-username"
+              >
+                {p.usuario}
+              </Link>
+            </strong>
+            : {p.contenido}
+            <br />
+            <small className="pizarra-date">
               {new Date(p.fecha_ingreso).toLocaleString('es-EC', {
                 dateStyle: 'short',
                 timeStyle: 'short'

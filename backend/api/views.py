@@ -4,12 +4,13 @@ from django.db.models import Q
 from rest_framework import generics
 from .serializers import UserSerializer
 from rest_framework.permissions import  AllowAny
-from .serializers import PizarraSerializer, RoomChatSerializer, ChatMessagesSerializer
+from .serializers import PizarraSerializer
 from datetime import date
 from rest_framework.permissions import IsAuthenticated
 from .models import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -41,31 +42,6 @@ class PizarraListView(generics.ListAPIView):
         return self.queryset.filter(fecha_ingreso__date=today)
     
 
-class RoomChatListCreateView(generics.ListCreateAPIView):
-    queryset = RoomChat.objects.all()
-    serializer_class = RoomChatSerializer
-    permission_classes = [AllowAny]  # Adjust permissions as needed
-    
-    def get_queryset(self):
-        user = self.request.user
-        return self.queryset.filter(Q(usuario_sender=user) | Q(usuario_receiver=user))
-
-    def perform_create(self, serializer):
-        serializer.save(usuario_sender=self.request.user)
-        
-class ChatMessagesListCreateView(generics.ListCreateAPIView):
-    queryset = ChatMessanges.objects.all()
-    serializer_class = ChatMessagesSerializer
-    permission_classes = [AllowAny]
-
-    def get_queryset(self):
-        # Filtra los mensajes para que solo muestre los del usuario autenticado
-        user = self.request.user
-        return self.queryset.filter(usuario=user)
-
-    def perform_create(self, serializer):
-        serializer.save(usuario=self.request.user)
-        
         
 class UserView(APIView):
     permission_classes = [AllowAny]  # O usa IsAuthenticated si quieres restringirlo
@@ -76,3 +52,21 @@ class UserView(APIView):
             return Response({'id': user.id, 'username': user.username})
         else:
             return Response({'detail': 'No autenticado'}, status=401)
+
+@api_view(['GET'])
+def user_info(request):
+    username = request.GET.get('username')
+    if not username:
+        return Response({'detail': 'Username requerido'}, status=400)
+    try:
+        user = User.objects.get(username=username)
+        return Response({
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'is_staff': user.is_staff,
+        })
+    except User.DoesNotExist:
+        return Response({'detail': 'Usuario no encontrado'}, status=404)
