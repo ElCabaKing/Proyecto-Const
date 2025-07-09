@@ -65,6 +65,14 @@ function FormularioLogin({ route }) {
                     {loading ? "Processing..." : "Login"}
                 </button>
             </div>
+            <div>
+                <Link
+                to={`/register`}
+                className="link-register"
+              >
+                No tienes cuenta? Regístrate       \\
+              </Link>
+            </div>
         </form>
     );
 }
